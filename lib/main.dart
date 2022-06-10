@@ -65,6 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Size screenSize = MediaQuery.of(context).size;
     var h = screenSize.height;
     var maxItems = 10;
+    double fontSizeVal = 22.0;
     //var h = screenSize.height;
     return Scaffold(
       appBar: AppBar(
@@ -82,17 +83,29 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.all(val*3),
                   margin: const EdgeInsets.all(val),
                   decoration: const BoxDecoration(
-                    color: Colors.deepOrange,
+                    color: Colors.lightBlue,
                   ),
                   constraints: BoxConstraints.expand(height: h/maxItems),
+                  child: Text('Laundry Today',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: fontSizeVal
+                    ),
+                  )
                 ),
                 Container(
                   padding: const EdgeInsets.all(val*3),
                   margin: const EdgeInsets.all(val),
                   decoration: const BoxDecoration(
-                    color: Colors.lime,
+                    color: Colors.lightGreen,
                   ),
                   constraints: BoxConstraints.expand(height: h/maxItems),
+                  child: Text('Plan Gifts',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: fontSizeVal
+                    ),
+                  )
                 )
               ])),
       /*floatingActionButton: FloatingActionButton(
