@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Size screenSize = MediaQuery.of(context).size;
     var h = screenSize.height;
     var maxItems = 10;
-    double fontSizeVal = 22.0;
+    double fontSizeVal = 20.0;
     //var h = screenSize.height;
     return Scaffold(
       appBar: AppBar(
@@ -79,40 +79,51 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(mainAxisAlignment: MainAxisAlignment.start, 
           children: <
               Widget>[
-                Container(
-                  padding: const EdgeInsets.all(val*3),
-                  margin: const EdgeInsets.all(val),
-                  decoration: const BoxDecoration(
-                    color: Colors.lightBlue,
-                  ),
-                  constraints: BoxConstraints.expand(height: h/maxItems),
-                  child: Text('Laundry Today',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: fontSizeVal
-                    ),
-                  )
-                ),
-                Container(
-                  padding: const EdgeInsets.all(val*3),
-                  margin: const EdgeInsets.all(val),
-                  decoration: const BoxDecoration(
-                    color: Colors.lightGreen,
-                  ),
-                  constraints: BoxConstraints.expand(height: h/maxItems),
-                  child: Text('Plan Gifts',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: fontSizeVal
-                    ),
-                  )
-                )
+                TodoTaskWidget(val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Grocery Shopping', color : Colors.lightBlue),
+                TodoTaskWidget(val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Buy Gifts', color : Colors.lightGreen)
               ])),
       /*floatingActionButton: FloatingActionButton(
         onPressed: _addTask,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),*/ // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class TodoTaskWidget extends StatelessWidget {
+  const TodoTaskWidget({
+    Key? key,
+    required this.val,
+    required this.h,
+    required this.maxItems,
+    required this.fontSizeVal,
+    required this.text,
+    required this.color,
+  }) : super(key: key);
+
+  final double val;
+  final double h;
+  final int maxItems;
+  final double fontSizeVal;
+  final String text;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(val*2),
+      margin: EdgeInsets.all(val),
+      decoration: BoxDecoration(
+        color: color,
+      ),
+      constraints: BoxConstraints.expand(height: h/maxItems),
+      child: Text(text,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: fontSizeVal
+        ),
+      )
     );
   }
 }
