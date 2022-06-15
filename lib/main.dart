@@ -91,6 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+
+
 class TodoTaskWidget extends StatelessWidget {
   const TodoTaskWidget({
     Key? key,
@@ -118,11 +120,18 @@ class TodoTaskWidget extends StatelessWidget {
         color: color,
       ),
       constraints: BoxConstraints.expand(height: h/maxItems),
-      child: Text(text,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: fontSizeVal
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children : [
+          Text(text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: fontSizeVal
+          ),
         ),
+        ElevatedButton(onPressed: ()=>{print('Pressed checkbox')}, child: const Icon(Icons.check_box_outline_blank))
+        
+        ]
       )
     );
   }
