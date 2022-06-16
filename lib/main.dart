@@ -39,19 +39,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _addTask() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void _removeTask() {
-    setState(() {
-      _counter--;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,10 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-
-
-class TodoTaskWidget extends StatelessWidget {
-  const TodoTaskWidget({
+class TodoTaskWidget extends StatefulWidget {
+  TodoTaskWidget({
     Key? key,
     required this.val,
     required this.h,
@@ -102,7 +87,7 @@ class TodoTaskWidget extends StatelessWidget {
     required this.fontSizeVal,
     required this.text,
     required this.color,
-  }) : super(key: key);
+  });
 
   final double val;
   final double h;
@@ -110,26 +95,35 @@ class TodoTaskWidget extends StatelessWidget {
   final double fontSizeVal;
   final String text;
   final Color color;
+  IconData checkBoxType = Icons.check_box_outline_blank;
+
+  @override
+  State<TodoTaskWidget> createState() => _TodoTaskWidget();
+}
+
+class _TodoTaskWidget extends State<TodoTaskWidget> {
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(val*2),
-      margin: EdgeInsets.all(val),
+      padding: EdgeInsets.all(widget.val*2),
+      margin: EdgeInsets.all(widget.val),
       decoration: BoxDecoration(
-        color: color,
+        color: widget.color,
       ),
-      constraints: BoxConstraints.expand(height: h/maxItems),
+      constraints: BoxConstraints.expand(height: widget.h/widget.maxItems),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children : [
-          Text(text,
+          Text(widget.text,
           style: TextStyle(
             color: Colors.white,
-            fontSize: fontSizeVal
+            fontSize: widget.fontSizeVal
           ),
         ),
-        ElevatedButton(onPressed: ()=>{print('Pressed checkbox')}, child: const Icon(Icons.check_box_outline_blank))
+        ElevatedButton(onPressed: ()=> setState(() {
+          widget.checkBoxType=(widget.checkBoxType==Icons.check_box_outline_blank)?Icons.check_box:Icons.check_box_outline_blank;
+        }), child: Icon(widget.checkBoxType))
         
         ]
       )
