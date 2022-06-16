@@ -15,13 +15,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: const MyHomePage(title: 'TODO App'),
+      home: MyHomePage(title: 'TODO App'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -33,12 +33,25 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
+  List<TodoTaskWidget> todoTasks = <TodoTaskWidget>[];
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  void _addTask(){
+    const double val = 8.0;
+    Size screenSize = MediaQuery.of(context).size;
+    var h = screenSize.height;
+    var maxItems = 10;
+    double fontSizeVal = 20.0;
+    
+    setState(() {
+      widget.todoTasks.add(TodoTaskWidget(val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Grocery Shopping', color : Colors.lightBlue));
+    });    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    const double val = 8.0;
-    Size screenSize = MediaQuery.of(context).size;
-    var h = screenSize.height;
-    var maxItems = 10;
-    double fontSizeVal = 20.0;
+    
     //var h = screenSize.height;
     return Scaffold(
       appBar: AppBar(
@@ -64,16 +73,17 @@ class _MyHomePageState extends State<MyHomePage> {
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
           child: Column(mainAxisAlignment: MainAxisAlignment.start, 
-          children: <
-              Widget>[
-                TodoTaskWidget(val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Grocery Shopping', color : Colors.lightBlue),
-                TodoTaskWidget(val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Buy Gifts', color : Colors.lightGreen)
-              ])),
-      /*floatingActionButton: FloatingActionButton(
+          children: //[
+                //TodoTaskWidget(val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Grocery Shopping', color : Colors.lightBlue),
+                //TodoTaskWidget(val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Buy Gifts', color : Colors.lightGreen)
+              //]
+                widget.todoTasks
+              )),
+      floatingActionButton: FloatingActionButton(
         onPressed: _addTask,
-        tooltip: 'Increment',
+        tooltip: 'Add Task',
         child: const Icon(Icons.add),
-      ),*/ // This trailing comma makes auto-formatting nicer for build methods.
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
