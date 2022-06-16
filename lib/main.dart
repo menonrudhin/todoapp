@@ -43,13 +43,16 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   void _removeTask(int index){
+    //print('remove task $index');
     int i = 0;
-    widget.todoTasks.forEach((element) {
-      if(element.index!=index) {
-        ++i;
+    for (var element in widget.todoTasks) {
+      //print('element in list : ${element.index}');
+      if(element.index==index) {
+        break;
       }
-    });
-    print("index  = $i");
+      ++i;
+    }
+    //print("index  = $i");
     setState(() {
       widget.todoTasks.removeAt(i);  
     });    
@@ -63,7 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
     double fontSizeVal = 20.0;
     
     setState(() {
-      widget.todoTasks.add(TodoTaskWidget(index: widget.index++, val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Grocery Shopping', color : Colors.lightBlue, removeTask: _removeTask));
+      var index = widget.index++;
+      widget.todoTasks.add(TodoTaskWidget(index: index, val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Grocery Shopping $index', color : Colors.lightBlue, removeTask: _removeTask));
     });
   }
 
@@ -154,6 +158,7 @@ class _TodoTaskWidget extends State<TodoTaskWidget> {
         }), 
         child: Icon(widget.checkBoxType)),
         ElevatedButton(onPressed: ()=> setState(() {
+          //print('remove ${widget.index}');
           widget.removeTask(widget.index);
         }), child: const Icon(Icons.delete))
         ]
