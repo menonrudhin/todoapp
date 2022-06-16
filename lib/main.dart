@@ -34,12 +34,26 @@ class MyHomePage extends StatefulWidget {
 
   final String title;
   List<TodoTaskWidget> todoTasks = <TodoTaskWidget>[];
+  int index = 0;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  void _removeTask(int index){
+    int i = 0;
+    widget.todoTasks.forEach((element) {
+      if(element.index!=index) {
+        ++i;
+      }
+    });
+    print("index  = $i");
+    setState(() {
+      widget.todoTasks.removeAt(i);  
+    });    
+  }
 
   void _addTask(){
     const double val = 8.0;
@@ -49,8 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
     double fontSizeVal = 20.0;
     
     setState(() {
-      widget.todoTasks.add(TodoTaskWidget(val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Grocery Shopping', color : Colors.lightBlue));
-    });    
+      widget.todoTasks.add(TodoTaskWidget(index: widget.index++, val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Grocery Shopping', color : Colors.lightBlue, removeTask: _removeTask));
+    });
   }
 
   @override
@@ -91,20 +105,24 @@ class _MyHomePageState extends State<MyHomePage> {
 class TodoTaskWidget extends StatefulWidget {
   TodoTaskWidget({
     Key? key,
+    required this.index,
     required this.val,
     required this.h,
     required this.maxItems,
     required this.fontSizeVal,
     required this.text,
     required this.color,
+    required this.removeTask,
   });
 
+  final int index;
   final double val;
   final double h;
   final int maxItems;
   final double fontSizeVal;
   final String text;
   final Color color;
+  final removeTask;
   IconData checkBoxType = Icons.check_box_outline_blank;
 
   @override
@@ -133,8 +151,11 @@ class _TodoTaskWidget extends State<TodoTaskWidget> {
         ),
         ElevatedButton(onPressed: ()=> setState(() {
           widget.checkBoxType=(widget.checkBoxType==Icons.check_box_outline_blank)?Icons.check_box:Icons.check_box_outline_blank;
-        }), child: Icon(widget.checkBoxType))
-        
+        }), 
+        child: Icon(widget.checkBoxType)),
+        ElevatedButton(onPressed: ()=> setState(() {
+          widget.removeTask(widget.index);
+        }), child: const Icon(Icons.delete))
         ]
       )
     );
