@@ -88,19 +88,12 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children : [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start, 
-                children:
-                  widget.todoTasks // list of todo tasks
-               )
-            ]
-          )
+      body: Scrollbar(
+        // scroll through the todo tasks
+            child : ListView.builder(
+                itemCount: widget.todoTasks.length,
+                itemBuilder: (c, i) => widget.todoTasks.elementAt(i)
+            ),
         ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addTask,
