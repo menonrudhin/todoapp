@@ -91,13 +91,17 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
           // Center is a layout widget. It takes a single child and positions it
           // in the middle of the parent.
-          child: Column(mainAxisAlignment: MainAxisAlignment.start, 
-          children: //[
-                //TodoTaskWidget(val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Grocery Shopping', color : Colors.lightBlue),
-                //TodoTaskWidget(val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Buy Gifts', color : Colors.lightGreen)
-              //]
-                widget.todoTasks
-              )),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children : [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start, 
+                children:
+                  widget.todoTasks // list of todo tasks
+               )
+            ]
+          )
+        ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addTask,
         tooltip: 'Add Task',
