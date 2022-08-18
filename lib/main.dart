@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
     
     setState(() {
       var index = widget.index++;
-      widget.todoTasks.add(TodoTaskWidget(index: index, val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Grocery Shopping $index', color : Colors.lightBlue, removeTask: _removeTask));
+      widget.todoTasks.add(TodoTaskWidget(index: index, val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Note $index', color : Colors.lightBlue, removeTask: _removeTask));
     });
   }
 

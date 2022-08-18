@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TodoTaskWidget extends StatefulWidget {
@@ -51,12 +52,29 @@ class _TodoTaskWidget extends State<TodoTaskWidget> {
           widget.checkBoxType=(widget.checkBoxType==Icons.check_box_outline_blank)?Icons.check_box:Icons.check_box_outline_blank;
         }), 
         child: Icon(widget.checkBoxType)),
-        ElevatedButton(onPressed: ()=> setState(() {
+        ElevatedButton(
+          onPressed: ()=> setState(() {
           //print('remove ${widget.index}');
           widget.removeTask(widget.index);
-        }), child: const Icon(Icons.delete))
+        }), child: const Icon(Icons.delete)),
+        ElevatedButton(
+              child : const Icon(Icons.edit),
+              onPressed : () {
+                openModal();
+              },
+          )
         ]
       )
     );
   }
+
+  Future openModal() => showDialog(
+            // context and builder are
+            // required properties in this widget
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Enter Note')
+            )
+  );
 }
+
