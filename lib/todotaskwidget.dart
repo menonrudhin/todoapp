@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +21,7 @@ class TodoTaskWidget extends StatefulWidget {
   final double h;
   final int maxItems;
   final double fontSizeVal;
-  final String text;
+  String text;
   final Color color;
   final removeTask;
   IconData checkBoxType = Icons.check_box_outline_blank;
@@ -29,6 +31,20 @@ class TodoTaskWidget extends StatefulWidget {
 }
 
 class _TodoTaskWidget extends State<TodoTaskWidget> {
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+    //log("called dispose");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +75,14 @@ class _TodoTaskWidget extends State<TodoTaskWidget> {
         }), child: const Icon(Icons.delete)),
         ElevatedButton(
               child : const Icon(Icons.edit),
-              onPressed : () {
-                openModal();
+              onPressed : () async {
+                final msg = await openModal();
+                if(msg == null || msg.isEmpty) return;
+                // else
+                setState(() {
+                  log("set state called $msg");
+                  widget.text = msg;
+                });
               },
           )
         ]
@@ -68,13 +90,29 @@ class _TodoTaskWidget extends State<TodoTaskWidget> {
     );
   }
 
-  Future openModal() => showDialog(
+  Future<String?> openModal() => showDialog<String>(
             // context and builder are
             // required properties in this widget
             context: context,
             builder: (context) => AlertDialog(
-              title: const Text('Enter Note')
+              title: const Text('Enter Note'),
+              content: TextField(
+                autocorrect: false,
+                autofocus: true,
+                decoration: InputDecoration(hintText: 'Enter text'),
+                controller : controller
+                ),
+              actions: [
+                TextButton(
+                onPressed: submit,
+                child: const Text("Save"),
+                )
+              ]
             )
   );
+
+  void submit(){
+    Navigator.of(context).pop(controller.text);
+  }
 }
 
