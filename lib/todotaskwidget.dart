@@ -80,7 +80,7 @@ class _TodoTaskWidget extends State<TodoTaskWidget> {
                 if(msg == null || msg.isEmpty) return;
                 // else
                 setState(() {
-                  log("set state called $msg");
+                  //log("set state called $msg");
                   widget.text = msg;
                 });
               },
