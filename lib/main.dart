@@ -82,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _addTask() async {
+    controller.clear();
     const double val = 8.0;
     Size screenSize = MediaQuery.of(context).size;
     var h = screenSize.height;
