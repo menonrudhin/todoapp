@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'todotaskwidget.dart';
 
@@ -43,6 +45,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controller.dispose();
+  }
+
   void _removeTask(int index){
     //print('remove task $index');
     int i = 0;
@@ -59,17 +77,42 @@ class _MyHomePageState extends State<MyHomePage> {
     });    
   }
 
-  void _addTask(){
+  void submit(){
+      Navigator.of(context).pop(controller.text);
+  }
+
+  _addTask() async {
     const double val = 8.0;
     Size screenSize = MediaQuery.of(context).size;
     var h = screenSize.height;
     var maxItems = 10;
     double fontSizeVal = 20.0;
     
+    final text = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Enter text'),
+        content: TextField(
+          autofocus: true,
+          controller : controller,      
+      ),
+      actions: [
+        TextButton(          
+          onPressed: submit,
+          child: const Text("Submit")
+          )
+      ]
+      ,
+    ));
+
+    log('Text input = $text');
+
     setState(() {
       var index = widget.index++;
-      widget.todoTasks.add(TodoTaskWidget(index: index, val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : 'Note $index', color : Colors.lightBlue, removeTask: _removeTask));
+      widget.todoTasks.add(TodoTaskWidget(index: index, val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : text.toString(), color : Colors.lightBlue, removeTask: _removeTask));
     });
+
+    
   }
 
   @override
