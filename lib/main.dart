@@ -45,6 +45,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  var colors = [Colors.lightBlue, Colors.deepOrange, Colors.purpleAccent, Colors.green];
   late TextEditingController controller;
 
   @override
@@ -110,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       var index = widget.index++;
-      widget.todoTasks.add(TodoTaskWidget(index: index, val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : text.toString(), color : Colors.lightBlue, removeTask: _removeTask));
+      widget.todoTasks.add(TodoTaskWidget(index: index, val: val, h: h, maxItems: maxItems, fontSizeVal: fontSizeVal, text : text.toString(), color : colors[index%4], removeTask: _removeTask));
     });
 
     
